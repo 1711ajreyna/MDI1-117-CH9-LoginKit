@@ -8,12 +8,20 @@ final class MDI1_117_Ch_9_LoginKitUITests: XCTestCase {
 
     override func setUpWithError() throws {
         continueAfterFailure = false
+
         app = XCUIApplication()
-        app.launchArguments = ["-UITesting-Reset"]
+
+        app.launchArguments = [
+            "-UITesting-Reset",
+            "-UITesting-NoAnimations"
+        ]
+
         app.launch()
+
         loginScreen = LoginScreen(app: app)
         dashboardScreen = DashboardScreen(app: app)
     }
+    
     /// Test #1 - Navigate to dashboard
     func test_successfulLogin_navigatesToDashboard() throws {
         loginScreen.login(email: "test@mail.com", password: "test1234")
@@ -41,4 +49,16 @@ final class MDI1_117_Ch_9_LoginKitUITests: XCTestCase {
 
         XCTAssertFalse(dashboardScreen.welcomeLabel.exists)
     }
+    
+    func test_successfulLogin_arbitrarySleep_isFlaky() throws {
+        loginScreen.login(
+            email: "test@mail.com",
+            password: "test1234"
+        )
+
+        XCTAssertTrue(
+            dashboardScreen.welcomeLabel.exists
+        )
+    }
+    
 }

@@ -6,16 +6,22 @@
 //
 
 import SwiftUI
+import UIKit
 
 @main
 struct MDI1_117_Ch_9_LoginKitApp: App {
-    
+
     init() {
+
         if ProcessInfo.processInfo.arguments.contains("-UITesting-Reset") {
-            SessionStore().clear()
+            UIView.setAnimationsEnabled(false)
         }
+        if ProcessInfo.processInfo.arguments.contains("-UITesting-NoAnimations") {
+            UIView.setAnimationsEnabled(false)
+        }
+
     }
- 
+
     var body: some Scene {
         WindowGroup {
             LoginView()
